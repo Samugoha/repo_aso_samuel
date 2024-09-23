@@ -3,6 +3,6 @@
 read -p "dime un directorio a comprimir:" directorio
 
 fecha=$(date +"%Y-%m-%d")
-archivo"${fecha}-$(basename "$directorio").tar.gz"
-tar -czf "$archivo" "$directorio"
+nombre_directorio=$(basename "$directorio")
+tar -zcvf "${fecha}=$(nombre_directorio}.tar.gz" "$directorio"
 
