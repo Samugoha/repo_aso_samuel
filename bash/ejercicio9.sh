@@ -1,18 +1,31 @@
 #!/bin/bash
-while true:
-  print("\n1. sumar\n.2 restar\n3. multiplicar\n4 dividir")
-  if opcion =='5':
-    break
 
- num1 = float(input("primer número: "))
- num2 = float(input("segundo número: "))
+  echo " 1. sumar"
+  echo " 2. restar"
+  echo " 3. multiplicar"
+  echo " 4. dividir"
 
- if opcion == '1':
-   print(f"Resultado : {num1 + num2}")
- elif opcion =='2':
-   print (f"resultado: {num1 - num2}")
- elif opcion =='3':
-   print (f"resultado: {num1 * num2}")
- elif opcion =='4':
-   print (f"resultado: {num1 / num2}")
+read -p " selecione una opcion " opcion
 
+ read -p "introduzca el primer numero" num1
+ read -p "introduzca el segundo numero" num2
+
+
+ case $opcion in
+ 1)
+   resultado=$((num1+num2))
+   echo $resultado
+;;
+ 2)
+  resultado=$((num1-num2))
+   echo $resultado
+;;
+ 3)
+  resultado=$((num1*num2))
+   echo $resultado
+;;
+ 4)
+  resultado=$((num1/num2))
+   echo $resultado
+;;
+ esac
