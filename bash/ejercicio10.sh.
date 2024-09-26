@@ -1,10 +1,10 @@
 #!/bin/bash
 
-read -p "introduce un numero"num1
+read -p "introduce un numero" numero
 
- if [[ num % 2 ==0 ]];
-
-  echo "el numero $num1 es par"
-else 
-  echo "el número $num1 es impar"
+  
+ if [ $(($numero %2 )) -eq 0 ]; then
+   echo "el numero $numero es par"
+else
+   echo "el numero $numero es impar"
 fi
