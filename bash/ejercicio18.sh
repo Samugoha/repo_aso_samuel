@@ -2,9 +2,9 @@
 
 filas=5
 
-for (( i=1; i<=filas ; i++ )); do
-for (( j=1; j<i; j++ )); do
- echo -n "$j "
+for (( i=1; i<=filas; i++ )); do
+ for (( s=1; s<i; s++ )); do
+ echo -n "$s "
  done
  echo
 done
