@@ -9,8 +9,8 @@ if [ "$num" -eq 0 ]; then
   break
 fi
 
-  ((sum + num))
+  ((sum += num))
 done
 
-echo "la suma total es: $suma"
+echo "la suma total es: $sum"
 
