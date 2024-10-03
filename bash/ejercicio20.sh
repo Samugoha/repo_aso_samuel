@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $# -ne 1]; then
+if [ $# -ne 1 ]; then
   echo "uso: $0 <números>"
   exit 1
 fi
@@ -17,8 +17,15 @@ if [ "$numero" -lt 2 ]; then
 fi
 
  primo=1
-for (( i=2; i*i<=numero; i++ )); then
+for (( i=2; i*i<=numero; i++ )); do
+ if (( numero % i == 0 )); then
   primo=0
   break
  fi
 done
+
+if (( primo == 1 )); then
+  echo "$numero es primo."
+ else
+  echo "$numero no es primo."
+fi
