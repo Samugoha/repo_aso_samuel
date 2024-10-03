@@ -1,4 +1,6 @@
 #!/bin/bash
+
+num=15
 echo " adivina el número que estoy pensando."
 
 while true; do
@@ -9,7 +11,7 @@ if [ "$intento" -eq 0 ]; then
   exit 0
 fi
 
-if ! [[ "$intento" =~ ^[0-9] +$ ]] || [[ "$intento" -lt 1 ] || [["$intento" -gt 100 ]; then
+if ! [[ "$intento" =~ ^[0-9]+$ ]] || [ "$intento" -lt 1 ] || [ "$intento" -gt 100 ]; then
   echo "introduce un numero valido entre 1 y 100."
   continue
 fi
