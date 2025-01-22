@@ -1,16 +1,35 @@
 ﻿$departamentos = "C:\Users\Administrador\Downloads\departamentos.csv"
 $empleados = "C:\Users\Administrador\Downloads\empleados.csv"
 $defaultPassword = "aso2025."
-$departamentosData = Import-Csv -Path $departamentos
-$empleadosData = Import-Csv -Path $empleados
-$empleadosData | ForEach-Object {
-    $login = "$($_.Nombre.ToLower()).$($_.Apellido.ToLower())"
-    if ($departamentosData.Departamento -contains $_.Departamento) {
-        New-LocalUser -Name $login -Password (ConvertTo-SecureString $defaultPassword -AsPlainText -Force) `
-                      -PasswordNeverExpires:$false -UserMayNotChangePassword:$false `
-                      -FullName "$($_.Nombre) $($_.Apellido)"
-        Write-Host "Usuario '$login' creado."
-    } else {
-        Write-Host "El departamento '$($_.Departamento)' no existe. Usuario no creado."
-    }
+$departamentosdata = Import-Csv -Path $departamentos -Delimiter ";"
+New-ADOrganizationalUnit -name "Empresa" -Path "DC=EMPRESA,DC=LOCAL"
+
+foreach ($departamento in $departamentosdata) {
+$nombredept = $departamento.departamento
+$descripcion = $departamento.descripcion
+
+$ouPath = "OU=Empresa,DC=EMPRESA,DC=LOCAL"
+Write-Host $ouPath
+New-ADOrganizationalUnit -name $nombredept -Description $descripcion -Path $ouPath -ErrorAction SilentlyContinue
+}
+
+$empleadosdata = Import-Csv -Path $empleados -Delimiter ";"
+
+foreach ($empleado in $empleadosdata) {
+$departamento = $empleado.Departamento
+$nombre = $empleado.Nombre
+$apellido = $empleado.Apellido
+
+$login = ($nombre + "." + $apellido).ToLower()
+$ouPath = "OU=$departamento,OU=Empresa,DC=EMPRESA,DC=LOCAL"
+
+New-ADUser -SamAccountName $login `
+    -UserPrincipalName "$login@EMPRESA.LOCAL" `
+    -NAME "$nombre $apellido" `
+    -GivenName $nombre `
+    -surName $apellido `
+    -path $ouPath `
+    -AccountPassword (ConvertTo-SecureString $defaultPassword -AsPlainText -Force) `
+    -Enabled $true `
+    -ChangePasswordAtLogon $true
 }
